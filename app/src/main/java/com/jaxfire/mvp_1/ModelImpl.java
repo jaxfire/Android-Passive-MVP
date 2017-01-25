@@ -1,15 +1,15 @@
 package com.jaxfire.mvp_1;
 
-public class Model {
+public class ModelImpl implements LightUpdater{
 
-    Presenter presenter;
+    OnLightsSwitchedListener presenter;
     boolean lights;
 
-    public Model(Presenter presenter){
+    public ModelImpl(OnLightsSwitchedListener presenter){
         this.presenter = presenter;
     }
 
-    public void getLights(){
+    public void toggleLights(){
         //toggle lights boolean
         lights = !lights;
         presenter.lightsUpdated(lights);

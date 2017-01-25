@@ -1,17 +1,15 @@
 package com.jaxfire.mvp_1;
 
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class LightSwitchActivity extends AppCompatActivity implements View.OnClickListener, LightSwitchView{
 
-    Presenter presenter;
+    LightSwitchPresenter presenter;
 
     LinearLayout layout;
     TextView textView;
@@ -21,7 +19,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        presenter = new Presenter(this);
+
+        //DI could be used here
+        presenter = new PresenterImpl(this);
 
         layout = (LinearLayout) findViewById(R.id.activity_main);
         textView = (TextView) findViewById(R.id.textView);
@@ -41,9 +41,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView.setTextColor(colour);
     }
 
-
     @Override
     public void onClick(View v) {
         presenter.buttonClick();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }
